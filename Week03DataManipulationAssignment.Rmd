@@ -80,13 +80,25 @@ Examine the dataset and answer the following questions. Enter any code you use i
 
 * How many variables are in the dataset?
 
-    + Answer:
+    + Answer:11
     
 * List each variable and the level of measurement. Note if there are any issues you see with the data in that variable. (The first one is done for you.)
 
     + sex - nominal, no issues noted
+    + research - nominal no issues
+    
+    +height-continuous
+    +weight -continuous
+    +lvst1 - ordinal
+    +lvst2-ordinal
+    +lvst3--ordinal
+    +lvst4-ordinal
+    +frst1-ordinal
+     +frst2-ordinal
+      +frst3-ordinal
     
 ```{r, eval=FALSE}
+dataset
 
 ```
 
@@ -102,6 +114,11 @@ dataset <- dataset %>% mutate(bmi = round(weight/(height/100)^2,1))
 
 ```
 
+```{r, eval=FALSE}
+dataset
+
+```
+
 ## Reverse code a column
 The dataset contains questions for two fictitious instruments (questionnaires): 1) the Love of Statistics Scale, and 2) the Fear of Statistics Scale.
 
@@ -109,7 +126,7 @@ The Love of Statistics Scale consists of 4 questions rated on a scale of 1-5. Be
 
 * What level of measurement is the new lvst4reverse variable?
 
-    + Answer: 
+    + Answer: level of measurement is the same just reversed. ordinal, putting things in a rank
     
 ```{r}
 # The line below is how I first reverse coded the variable. It seemed to work, but I later found some problems with the z-scores.
@@ -121,6 +138,11 @@ The Love of Statistics Scale consists of 4 questions rated on a scale of 1-5. Be
 # The line below correctly reverse coded the lvst4 variable.
 dataset <- dataset %>% mutate(lvst4reverse = 6 - as.numeric(lvst4))
 ```
+```{r, eval=FALSE}
+dataset
+
+```
+
 
 ## Score the Love of Statistics Scale instrument
 Run the following code block to calculate a final score for the Love of Statistics Scale for each participant.
@@ -146,10 +168,11 @@ dataset <- dataset %>% mutate(FOSS_total = as.numeric(frst1) + as.numeric(frst2)
 
 Note any issues with the data in the new variables. Place code you use to examine the variables in the code block below. (Or just describe what you did.)
 
-    
 ```{r}
+dataset
 
 ```
+
 
 ## Final scores using averages 
 Not all instruments are scored using sums. If all items are measured using the same scale a mean can be calculated. One advantage of using means is the final score is in the same scale as the original items so interpreting can be a bit more straightforward, It's also possible to calculate the mean when there are missing data without changing the scale of the final score. Run the following code block to score the instruments using means instead of sums.
@@ -179,6 +202,11 @@ Z-scores are useful for a number of reasons. Since z-scores are unit free (the u
     + negative:
     
 ```{r}
+dataset
+
+```
+    
+```{r}
 dataset <- dataset %>% mutate(LOSS_total_z = scale(LOSS_total))
 dataset <- dataset %>% mutate(LOSS_mean_z = scale(LOSS_mean))
 
@@ -186,6 +214,11 @@ dataset <- dataset %>% mutate(FOSS_total_z = scale(FOSS_total))
 dataset <- dataset %>% mutate(FOSS_mean_z = scale(FOSS_mean))
 ```
 
+    
+```{r, eval=FALSE}
+dataset
+
+```
 ## Save your data for next week
 ```{r}
 rio::export(dataset,"Week4.rds")
